@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propuesta SOA y Servicio REST de Cotizaciones — Oasis / Paraty Tech</title>
+  <style>
+    :root { --tinta:#1f2933; --suave:#52606d; --linea:#e4e7eb; --acento:#0b6e4f; --fondo:#f7f9fa; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+           color:var(--tinta); line-height:1.65; background:#fff; }
+    header { background:var(--acento); color:#fff; padding:2.5rem 1.5rem; }
+    header h1 { margin:0 0 .5rem; font-size:1.7rem; }
+    header p { margin:0; opacity:.9; }
+    main { max-width:960px; margin:0 auto; padding:2rem 1.5rem 4rem; }
+    h2 { margin-top:2.5rem; padding-bottom:.4rem; border-bottom:2px solid var(--linea); font-size:1.35rem; }
+    h3 { margin-top:1.8rem; font-size:1.1rem; color:var(--suave); }
+    code, pre { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; }
+    pre { background:var(--fondo); border:1px solid var(--linea); border-radius:6px;
+          padding:1rem; overflow-x:auto; font-size:.88rem; }
+    code { background:var(--fondo); padding:.15em .4em; border-radius:4px; font-size:.9em; }
+    pre code { background:none; padding:0; }
+    table { border-collapse:collapse; width:100%; margin:1rem 0; font-size:.94rem; }
+    th, td { border:1px solid var(--linea); padding:.6rem .8rem; text-align:left; vertical-align:top; }
+    th { background:var(--fondo); }
+    figure { margin:1.5rem 0; }
+    figure img { max-width:100%; border:1px solid var(--linea); border-radius:6px; }
+    figcaption { font-size:.85rem; color:var(--suave); margin-top:.5rem; }
+    .aviso { background:#fff8e1; border-left:4px solid #f0b429; padding:1rem 1.2rem;
+             border-radius:0 6px 6px 0; margin:1.5rem 0; }
+    .repo { display:inline-block; background:var(--acento); color:#fff; text-decoration:none;
+            padding:.7rem 1.2rem; border-radius:6px; font-weight:600; }
+    .repo:hover { opacity:.9; }
+    footer { border-top:1px solid var(--linea); padding:1.5rem; text-align:center;
+             color:var(--suave); font-size:.85rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Propuesta SOA y servicio REST de cotizaciones</h1>
+  <p>Caso Oasis Hotels &amp; Resorts — Paraty Tech · Politécnico Grancolombiano · Grupo B-04</p>
+</header>
+
+<main>
+
+  <section id="repositorio">
+    <h2>Repositorio GitHub</h2>
+    <p>Repositorio público del proyecto:</p>
+    <p>
+      <a class="repo" href="https://github.com/USUARIO/paratytech-cotizaciones"
+         target="_blank" rel="noopener">
+        github.com/USUARIO/paratytech-cotizaciones
+      </a>
+    </p>
+  
+  </section>
+
+  <section id="descripcion">
+    <h2>Descripción del proyecto</h2>
+    <p>
+      Este proyecto presenta una propuesta de Arquitectura Orientada a Servicios (SOA)
+      para la gestión de cotizaciones entre los canales web y telefónico, utilizando el
+      patrón <strong>Logic Centralization</strong> y una API REST para mejorar la
+      coherencia tarifaria y la trazabilidad de las operaciones.
+    </p>
+    <p>
+      Es un diseño académico: no describe una API verificada de Oasis o Paraty Tech, no
+      accede a código interno y no mide resultados de producción. Los identificadores,
+      importes y políticas son sintéticos e ilustrativos.
+    </p>
+  </section>
+
+  <section id="integrantes">
+    <h2>Integrantes</h2>
+    <ul>
+      <li>María Alejandra Llanos Hernández</li>
+      <li>Laura María Idárraga Molano</li>
+      <li>Itzel Remolina González</li>
+      <li>Diego Alejandro Arias Tamayo</li>
+      <li>Camilo Andrés Rodríguez Hamón</li>
+    </ul>
+    <p><strong>Docente:</strong> Jesús Antonio Figueroa Guerrero · <strong>Asignatura:</strong> Arquitectura del Software</p>
+  </section>
+
+  <section id="codigo">
+    <h2>Código fuente</h2>
+
+    <h3>Estructura del proyecto</h3>
+<pre><code>paratytech-cotizaciones/
+├── README.md
+├── index.html
+├── package.json
+├── openapi.yaml
+├── docs/
+│   ├── Entrega_3_Semana_7.pdf
+│   ├── diagramas/
+│   │   ├── arquitectura.png
+│   │   ├── componentes.png
+│   │   └── secuencia.png
+│   └── evidencias/
+│       ├── crear-cotizacion.png
+│       ├── consultar-cotizacion.png
+│       ├── error409.png
+│       └── error401.png
+└── src/
+    ├── controllers/
+    ├── services/
+    ├── models/
+    ├── routes/
+    ├── middleware/
+    ├── app.js
+    └── server.js</code></pre>
+
+    <h3>Servicio REST</h3>
+    <ul>
+      <li><code>POST /v1/cotizaciones</code> — genera una oferta y la persiste</li>
+      <li><code>GET /v1/cotizaciones/{id}</code> — recupera una cotización sin recalcular</li>
+      <li><code>PUT /v1/cotizaciones/{id}/decision</code> — registra la decisión del cliente</li>
+    </ul>
+  </section>
+
+  <section id="api">
+    <h2>Documentación de la API</h2>
+    <p>La documentación de la API fue desarrollada utilizando OpenAPI/Swagger.</p>
+    <ul>
+      <li><code>openapi.yaml</code> — contrato de la API</li>
+      <li><code>swagger.json</code> — especificación generada para Swagger UI</li>
+    </ul>
+    <p>
+      Con el servidor en ejecución, la interfaz interactiva queda disponible en
+      <code>http://localhost:8080/swagger-ui.html</code>.
+    </p>
+  </section>
+
+  <section id="evidencias">
+    <h2>Evidencias de funcionamiento</h2>
+
+    <h3>Prueba 1 — Crear cotización</h3>
+    <p><strong>Estado esperado:</strong> <code>201 Created</code></p>
+<pre><code>POST /v1/cotizaciones
+Authorization: Bearer &lt;token-demo&gt;
+Idempotency-Key: demo-001
+Content-Type: application/json
+
+{
+  "hotelId": "OASIS-DEMO",
+  "habitacionId": "DOBLE",
+  "planTarifaId": "FLEX",
+  "entrada": "2026-11-20",
+  "salida": "2026-11-22",
+  "adultos": 2,
+  "edadesMenores": [],
+  "moneda": "MXN"
+}</code></pre>
+    <figure>
+      <figcaption>Respuesta <code>201 Created</code> con identificador, desglose de importes y decisión <code>PENDIENTE</code>.</figcaption>
+    </figure>
+
+    <h3>Prueba 2 — Consultar cotización</h3>
+    <p><strong>Estado esperado:</strong> <code>200 OK</code></p>
+<pre><code>GET /v1/cotizaciones/cot-demo-001
+Authorization: Bearer &lt;token-demo&gt;</code></pre>
+    <figure>
+         <figcaption>Recupera las condiciones originales, la vigencia y la decisión actual sin recalcular el precio.</figcaption>
+    </figure>
+
+    <h3>Prueba 3 — Cotización vencida</h3>
+    <p><strong>Estado esperado:</strong> <code>409 Conflict</code></p>
+<pre><code>PUT /v1/cotizaciones/cot-demo-001/decision
+Authorization: Bearer &lt;token-demo&gt;
+If-Match: "d1"
+Content-Type: application/json
+
+{ "estado": "ACEPTADA" }</code></pre>
+    <figure>
+            <figcaption>Respuesta <code>409</code> con <code>code: COTIZACION_VENCIDA</code>; se conserva la cotización y se permite generar una nueva vinculada.</figcaption>
+    </figure>
+
+    <h3>Prueba 4 — Acceso no autorizado</h3>
+    <p><strong>Estado esperado:</strong> <code>401 Unauthorized</code></p>
+<pre><code>GET /v1/cotizaciones/cot-demo-001
+(sin cabecera Authorization)</code></pre>
+    <figure>
+            <figcaption>Respuesta <code>401</code> con cabecera <code>WWW-Authenticate</code>.</figcaption>
+    </figure>
+  </section>
+
+  <section id="casos">
+    <h2>Casos de aceptación</h2>
+    <table>
+      <thead>
+        <tr><th>Caso</th><th>Resultado esperado</th><th>Verificación</th><th>Estado</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Entradas equivalentes web / teléfono</td>
+          <td>Mismos importes y versiones</td>
+          <td>Prueba automatizada <code>CotizacionEquivalenciaTest</code></td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <td>Beneficio no elegible</td>
+          <td>Sin descuento aplicado</td>
+          <td>Prueba automatizada <code>FidelizacionTest</code></td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <td>Reintento POST con misma clave</td>
+          <td>Un único identificador y registro</td>
+          <td>Prueba automatizada <code>IdempotenciaTest</code></td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <td>Cotización vencida</td>
+          <td><code>409</code> sin sobrescribir el precio</td>
+          <td>Evidencia 3 y <code>VigenciaTest</code></td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <td>Consulta de cotización ajena</td>
+          <td><code>404</code> sin datos de la oferta</td>
+          <td>Prueba automatizada <code>AutorizacionTest</code></td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <td>Dependencia o registro caído</td>
+          <td><code>503</code> sin cotización incompleta</td>
+          <td>Prueba con dependencia simulada</td>
+          <td>✅</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Los casos marcados corresponden a pruebas ejecutadas sobre el servicio local con
+      datos sintéticos. No son pruebas de integración contra los sistemas de Oasis.
+    </p>
+  </section>
+
+  <section id="diagramas">
+    <h2>Diagramas</h2>
+
+    <h3>Arquitectura SOA</h3>
+    <figure>
+      <figcaption>Consumidores, capacidad oficial de cotización y registro de servicios.</figcaption>
+    </figure>
+
+    <h3>Diagrama de componentes</h3>
+    <figure>
+      <figcaption>Responsabilidades de cotización, reglas comerciales, fidelización y registro.</figcaption>
+    </figure>
+
+    <h3>Diagrama de secuencia</h3>
+    <figure>
+            <figcaption>Creación, consulta y registro de la decisión, con el bloque de error que impide emitir una oferta sin evidencia.</figcaption>
+    </figure>
+  </section>
+
+   </section>
+
+</main>
+
+<footer>
+  Politécnico Grancolombiano · Arquitectura del Software · Grupo B-04 · 2026
+</footer>
+
+</body>
+</html>
